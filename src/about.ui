@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="about_toplevel">
+    <property name="height">540</property>
+    <property name="maxsize">775|540</property>
+    <property name="minsize">775|540</property>
+    <property name="overrideredirect">False</property>
+    <property name="resizable">none</property>
+    <property name="title" translatable="yes">HyperKyube: OCR Gui MultiTool</property>
+    <property name="width">775</property>
+    <child>
+      <object class="tk.Frame" id="frame1">
+        <property name="height">540</property>
+        <property name="width">775</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">0</property>
+          <property name="sticky">nsew</property>
+          <property type="col" id="0" name="weight">1</property>
+          <property type="row" id="0" name="weight">1</property>
+        </layout>
+        <child>
+          <object class="tk.Message" id="about_message">
+            <property name="anchor">center</property>
+            <property name="font">{FreeMono} 11 {bold}</property>
+            <property name="justify">left</property>
+            <property name="text" translatable="yes">Testing</property>
+            <property name="width">800</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+              <property type="col" id="0" name="weight">1</property>
+              <property type="row" id="0" name="weight">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="tk.Button" id="okay_button">
+            <property name="command" type="command" cbtype="simple">hide</property>
+            <property name="compound">top</property>
+            <property name="font">{DejaVu Sans Mono} 14 {}</property>
+            <property name="padx">20</property>
+            <property name="pady">15</property>
+            <property name="takefocus">false</property>
+            <property name="text" translatable="yes">OK</property>
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="propagate">True</property>
+              <property name="row">1</property>
+              <property name="sticky">nsew</property>
+              <property type="col" id="0" name="weight">1</property>
+              <property type="row" id="0" name="weight">1</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

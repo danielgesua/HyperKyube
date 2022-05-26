@@ -1,0 +1,156 @@
+<?xml version='1.0' encoding='utf-8'?>
+<interface version="1.1">
+  <object class="tk.Toplevel" id="outer_window">
+    <property name="minsize">300|800</property>
+    <property name="takefocus">false</property>
+    <property name="title" translatable="yes">HyperKyube: OCR MultiTool</property>
+    <bind sequence="&lt;Control-F4&gt;" handler="exit" add="" />
+    <bind sequence="&lt;Control-c&gt;" handler="copy_text" add="" />
+    <bind sequence="&lt;Control-o&gt;" handler="load_boxfile" add="" />
+    <bind sequence="&lt;Control-s&gt;" handler="save_boxfile" add="" />
+    <bind sequence="&lt;Delete&gt;" handler="delete_wordbox" add="" />
+    <child>
+      <object class="pygubu.builder.widgets.toplevelmenu" id="toplevelmenu1">
+        <child>
+          <object class="tk.Menu" id="main_menu">
+            <child>
+              <object class="tk.Menuitem.Submenu" id="file_submenu">
+                <property name="columnbreak">false</property>
+                <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                <property name="label" translatable="yes">File</property>
+                <property name="tearoff">false</property>
+                <property name="underline">0</property>
+                <child>
+                  <object class="tk.Menuitem.Command" id="load_command">
+                    <property name="command" type="command" cbtype="simple">load_boxfile</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Open...        Ctrl + O</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="save_command">
+                    <property name="command" type="command" cbtype="simple">save_boxfile</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Save...        Ctrl + S</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Separator" id="separator1" />
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="preferences_command">
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Preferences...</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Separator" id="separator2" />
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="exit_command">
+                    <property name="command" type="command" cbtype="simple">exit</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Exit           Ctrl + F4</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Menuitem.Submenu" id="edit_submenu">
+                <property name="columnbreak">false</property>
+                <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                <property name="label" translatable="yes">Edit</property>
+                <property name="relief">flat</property>
+                <property name="tearoff">false</property>
+                <property name="underline">0</property>
+                <child>
+                  <object class="tk.Menuitem.Command" id="copy_command">
+                    <property name="command" type="command" cbtype="simple">copy_text</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Copy Text          Ctrl + C</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="delete_command">
+                    <property name="command" type="command" cbtype="simple">delete_wordbox</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Delete Box         &lt;DELETE&gt;</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="tk.Menuitem.Submenu" id="help_submenu">
+                <property name="columnbreak">false</property>
+                <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                <property name="label" translatable="yes">Help</property>
+                <property name="relief">flat</property>
+                <property name="takefocus">false</property>
+                <property name="tearoff">false</property>
+                <property name="underline">0</property>
+                <child>
+                  <object class="tk.Menuitem.Command" id="tutorial_command">
+                    <property name="command" type="command" cbtype="simple">load_interactive_guide</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Display Interactive Guide...</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="about_command">
+                    <property name="command" type="command" cbtype="simple">display_about_dialogue</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">About HyperKyube: OCR Gui MultiTool</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="tk.Frame" id="outer_frame">
+        <property name="height">800</property>
+        <layout manager="grid">
+          <property name="column">0</property>
+          <property name="propagate">True</property>
+          <property name="row">1</property>
+          <property name="sticky">nsew</property>
+          <property type="col" id="0" name="weight">1</property>
+          <property type="row" id="1" name="weight">1</property>
+        </layout>
+        <child>
+          <object class="tk.Canvas" id="image_display">
+            <property name="background">#000000</property>
+            <property name="height">800</property>
+            <property name="relief">sunken</property>
+            <bind sequence="&lt;1&gt;" handler="activate_selection" add="" />
+            <bind sequence="&lt;B1-Motion&gt;" handler="drag_selection" add="" />
+            <bind sequence="&lt;ButtonRelease-1&gt;" handler="finish_selected_action" add="" />
+            <bind sequence="&lt;Configure&gt;" handler="adjust_window" add="" />
+            <bind sequence="&lt;Double-Button-1&gt;" handler="edit_text" add="" />
+            <bind sequence="&lt;Motion&gt;" handler="activate_required_tooltips" add="" />
+            <layout manager="grid">
+              <property name="column">0</property>
+              <property name="padx">10</property>
+              <property name="pady">10</property>
+              <property name="propagate">True</property>
+              <property name="row">0</property>
+              <property name="sticky">nsew</property>
+              <property type="col" id="0" name="weight">1</property>
+              <property type="row" id="0" name="weight">1</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -1,0 +1,3 @@
+.venv/
+receipt*.*
+**__pycache__
