@@ -16,6 +16,38 @@
 #    limitations under the License.
 #   
 
+'''
+I know someone will shoot me for this...
+
+This module contains a namespace used to hold objects of a global scope, which must be
+widely shared amongst various classes and modules.
+
+It avoids parameter hell without causing signifficant namespace polution by implementing a new 
+convention: Much like "self" is used to access attributes of class instances, the RealGlobalScope
+instance "real_global_scope" aliased as "the" can be used to access singular global variables.
+
+For example: 
+
+- "the.scale" refers to the scale factor used to convert from the image and file coordinates
+  to the coordinates of the (potentially larger or smaller) canvas.
+
+- "the.buffered_image" refers to the image that is currently being processed to display on the
+  canvas.
+
+- "the.boxes" refers to all the wordboxes parsed from the current boxfile.
+
+- "the.active_wordbox" refers to the current wordbox that has been selected by the user,
+  or an instance of NoActiveWordBox otherwise.
+
+- "the.new_wordbox" refers to a NewWordBox object reference if there is a wordbox currently
+  being created, or None otherwise. 
+
+- "the.active_dragbox" refers to the dragbox currently being dragged during dimension adjustments
+  or None otherwise.
+
+- "the.active_file_path" refers to a string containing the fully qualified path to the box
+  file that's currently loaded.
+'''
 
 from typing import TYPE_CHECKING, Union
 from PIL import Image

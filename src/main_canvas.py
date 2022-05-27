@@ -16,6 +16,12 @@
 #    limitations under the License.
 #   
 
+'''
+Contains the image manipulations and canvas redrawing code needed to 
+render the main canvas widget.
+'''
+
+
 from __future__ import annotations
 
 

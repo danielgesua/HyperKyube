@@ -16,6 +16,11 @@
 #    limitations under the License.
 #   
 
+'''
+Responsible for handling the creation, positioning and display of OCR text as a tooltip
+that displays when a given wordbox gets hovered over with the mouse.
+'''
+
 
 from __future__ import annotations
 

@@ -16,6 +16,10 @@
 #    limitations under the License.
 #   
 
+''' 
+This module contains all objects related to geometric entities rendered on the main canvas.
+'''
+
 
 from __future__ import annotations
 

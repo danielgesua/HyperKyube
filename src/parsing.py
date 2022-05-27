@@ -16,6 +16,11 @@
 #    limitations under the License.
 #   
 
+'''
+Module primarily responsible for parsing box file data out of lstm box file format and
+exposing it in a more convenient model for the creation of rendered geometry.
+'''
+
 from __future__ import annotations
 
 

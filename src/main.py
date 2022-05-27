@@ -16,6 +16,11 @@
 #    limitations under the License.
 #   
 
+'''
+Main entry point of the application. Contains the root object and handles various 
+user-triggered GUI events like clicks, keyboard strokes and prompts.
+'''
+
 from __future__ import annotations
 
 
