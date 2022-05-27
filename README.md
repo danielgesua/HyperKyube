@@ -17,9 +17,11 @@ It's primary purpose is currently to edit lstmbox box files for training the LST
 
 # Dependencies
 
-HyperKyube does not have too many dependencies. The Gui runs based on python's native tkinter library, and the image manipulations use Python Imaging Library (aka [Pillow](https://github.com/python-pillow/Pillow)).
+HyperKyube has a few dependencies. The Gui runs based on python's native tkinter library, and the image manipulations use Python Imaging Library (aka [Pillow](https://github.com/python-pillow/Pillow)).
 
 Apart from that, the development was greatly facilitated by a killer GUI builder called [Pygubu](https://github.com/alejandroautalan/pygubu), and the file parser makes light usage of [Pydantic](https://github.com/samuelcolvin/pydantic) dataclasses for typecasting.
+
+Finally the rendered geometry uses [Numpy](https://pypi.org/project/numpy/) for a few simple vector operations.
 
 Installation of the dependencies is easy and explained in the installation section below. 
 
@@ -43,7 +45,7 @@ git clone https://github.com/danielgesua/HyperKyube.git
 ```bash
 pip install -r requirements.txt
 ```
-    **NOTE:** For the more reliable results you may *first* wanna upgrade your pip installation. This can easily be done by using the following command:
+  **NOTE:** For the more reliable results you may *first* wanna upgrade your pip installation. This can easily be done by using the following command:
 
 ```bash
 pip install --upgrade pip
