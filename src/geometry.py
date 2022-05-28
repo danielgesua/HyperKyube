@@ -23,14 +23,13 @@ This module contains all objects related to geometric entities rendered on the m
 
 from __future__ import annotations
 
-
-from global_scope import NoActiveWordBox, real_global_scope as the
 from typing import Iterator, List
 from numpy import float64, dot
-from parsing import Displacements, WordBoxCore
 from abc import ABC, abstractmethod
-from tkinter import messagebox
-from tkinter.simpledialog import askstring
+
+from parsing import Displacements, WordBoxCore
+from global_scope import NoActiveWordBox, real_global_scope as the
+from dialogs import prompt_for_wordbox_text, display_invalid_value_error
 
 horizontal_edge_names = ['left','right']
 vertical_edge_names = ['top','bottom']
@@ -193,27 +192,13 @@ class WordBox():
         ''' Return the dragboxes '''
         return (edge.dragbox for edge in self.rendered.edges)
 
-    def display_invalid_value_prompt(self):
-        ''' Display an error prompt to let the user know to correct the inputted value.'''
-        window_title = 'Error.'
-        error_message = 'A value is mandatory. Please enter a new value.'
-        messagebox.showinfo(window_title,error_message)
-
-    def prompt_for_text(self) -> str|None:
-        '''
-        Request text from user and return it.
-        '''
-        window_title = 'Edit text.'
-        prompt = 'Value:' + '\t'*10
-        return askstring(window_title,prompt,initialvalue=self.core.text)
-
     def launch_text_editor_dialog(self):
         ''' 
         Output a persistent dialogue to let user change the text of this wordbox. 
         Prevent user from canceling it or providing an empty string. 
         '''
-        while not (value := self.prompt_for_text()): 
-            self.display_invalid_value_prompt()
+        while not (value := prompt_for_wordbox_text(self)): 
+            display_invalid_value_error()
         self.core.text = value
 
     def __init__(self, core: WordBoxCore):

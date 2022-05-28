@@ -26,7 +26,6 @@ from __future__ import annotations
 
 import pathlib
 import tkinter
-from tkinter.filedialog import askopenfilename
 
 from global_scope import real_global_scope as the
 from gui_builder import builder
@@ -34,6 +33,7 @@ from geometry import DragBox, NewWordBox, WordBoxes
 from parsing import parse
 from tooltips import WordBoxToolTip
 from about import AboutDialog
+from dialogs import prompt_for_boxfile_to_open
 from main_canvas import CanvasManager, with_refresh
 
 
@@ -62,16 +62,10 @@ class GuiApp:
     def run(self):
         self.mainwindow.mainloop()
 
-    def _prompt_for_boxfile_to_open(self) -> str:
-        ''' Request a file from the user and return its path.'''
-        title = 'Select Box-File to open.'
-        valid_filetypes = [('Tesseract Box Files','*.box')]
-        return askopenfilename(title=title,filetypes=valid_filetypes)
-
     @with_refresh
     def load_boxfile(self, event: tkinter.Event = None):
         ''' Open a box-file/image combination on the main canvas.'''
-        if (file_name := self._prompt_for_boxfile_to_open()): 
+        if (file_name := prompt_for_boxfile_to_open()): 
             file_path = pathlib.Path(file_name)
             the.active_file_path = str(file_path)
             img_file_path = str(file_path.with_suffix('.tiff'))
