@@ -25,9 +25,7 @@ from __future__ import annotations
 
 
 from global_scope import NoActiveWordBox, real_global_scope as the
-from functools import cached_property
-from types import SimpleNamespace
-from typing import List, NamedTuple
+from typing import Iterator, List
 from numpy import float64, dot
 from parsing import Displacements, WordBoxCore
 from abc import ABC, abstractmethod
@@ -100,7 +98,7 @@ class EdgeCenter():
     def position(self) -> float64:
         ''' Return the vector corresponding to the center coordinates of the edge. '''
         vector_1 = self.edge.axis * self.edge.displacement
-        vector_2 = self.edge.adjacent.axis * self.edge.adjacent.centerline_displacement
+        vector_2 = self.edge.perpendicular_axis * self.wordbox.rendered.center
         return vector_1 + vector_2
 
     @position.setter
@@ -109,6 +107,7 @@ class EdgeCenter():
 
     def __init__(self, edge: Edge) -> None:
         self.edge = edge
+        self.wordbox = edge.wordbox
 
 class Edge():
     ''' A single edge in a rendered wordbox. '''
@@ -125,51 +124,33 @@ class Edge():
         new_value = int(value/the.scale)
         setattr(self.core_displacements,self.name,new_value)
 
-    @property
-    def axis(self) -> float64: 
-        ''' Return the primary axis associated with the displacement of the edge. '''
-        return self.subgroup.axis
-
-    @cached_property
-    def adjacent(self) -> EdgeSubgroup: 
-        ''' Return edges that are adjacent to the current one based on it's subgroup. '''
-        return self.subgroup.adjacent
-
-    def __init__(self,wordbox: WordBox, name: str, subgroup: EdgeSubgroup):
+    def __init__(self,wordbox: WordBox, name: str, axis: float64):
         self.core_displacements = wordbox.core.displacements
-        self.subgroup = subgroup
+        self.axis = axis
+        self.perpendicular_axis = float64([1,1]) - self.axis
+        self.wordbox = wordbox
         self.center = EdgeCenter(self)
         self.dragbox = DragBox(self.center)
         self.name = name
 
     def __repr__(self) -> str: return f'{self.displacement}'
 
-class Edges(NamedTuple):
-    left:Edge
-    top:Edge
-    right:Edge
-    bottom:Edge
+class Edges():
+    ''' Iterable collection of edges subdivided by subgroup that assists in edge creation. '''
 
-class EdgeSubgroup(SimpleNamespace):
-    ''' A subgroup of the edges of a box such as horizontal edges or vertical edges. '''
+    def __init__(self,wordbox: WordBox):
+        self.left: Edge = None
+        self.top: Edge = None
+        self.right: Edge = None
+        self.bottom: Edge = None
+        horizontal = {name: Edge(wordbox,name,float64([1,0])) for name in horizontal_edge_names}
+        vertical = {name: Edge(wordbox,name,float64([0,1])) for name in vertical_edge_names}
+        self.horizontal = [edge for edge in horizontal.values()]
+        self.vertical = [edge for edge in vertical.values()]
+        self.as_list = [*self.horizontal,*self.vertical]
+        self.__dict__ = {**self.__dict__,**horizontal,**vertical}
 
-    @property
-    def centerline_displacement(self): 
-        ''' Return the displacement of the centerline. '''
-        displacements = [edge.displacement for edge in self]
-        return sum(displacements)/2
-
-    def __init__(self, wordbox: WordBox, edge_name_list: List[str], axis: float64):
-        self.asdict = {name:Edge(wordbox,name,self) for name in edge_name_list}
-        self.astuple = tuple(self.asdict.values())
-        self.axis = axis
-        self.adjacent: EdgeSubgroup = None
-        super().__init__(**self.asdict)
-
-    def keys(self): return self.asdict.keys()
-    def __getitem__(self,item:str): return self.asdict[item]
-    def __iter__(self): return iter(self.astuple)
-
+    def __iter__(self) -> Iterator[Edge]: return iter(self.as_list)
 
 class RenderedWordBox(RenderedBox):
     ''' The screen representation of a word box.'''
@@ -182,6 +163,13 @@ class RenderedWordBox(RenderedBox):
         ''' Return the displacements of the edges in the rendered wordbox as a Displacements object. '''
         return Displacements(**{edge.name:edge.displacement for edge in self.edges})
 
+    @property
+    def center(self) -> float64:
+        ''' Return the center of the box as a numpy array. '''
+        x = sum([edge.displacement for edge in self.edges.horizontal])/2
+        y = sum([edge.displacement for edge in self.edges.vertical])/2
+        return float64([x,y])
+
     def contains(self,point: List[int,int]):
         ''' Return wether the point is within the bounds of this box. '''
         left = self.edges.left.displacement
@@ -191,11 +179,7 @@ class RenderedWordBox(RenderedBox):
         return (left <= point[0] <= right) and (top <= point[1] <= bottom)
 
     def __init__(self,wordbox: WordBox):
-        self.horizontal_edges = EdgeSubgroup(wordbox, horizontal_edge_names,float64([1,0]))
-        self.vertical_edges = EdgeSubgroup(wordbox, vertical_edge_names,float64([0,1]))
-        self.horizontal_edges.adjacent = self.vertical_edges
-        self.vertical_edges.adjacent = self.horizontal_edges    
-        self.edges = Edges(**self.horizontal_edges,**self.vertical_edges)
+        self.edges = Edges(wordbox)
 
 
 class WordBox():

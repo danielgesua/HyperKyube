@@ -71,7 +71,7 @@ With tesseract installed, simply navigate to the folder where your .tiff is stor
 tesseract image_name.tiff image_name lstmbox
 ```
 
-**NOTE:** The name is repeated on purpose (it is **not** a typo). Tesseract's first argument is the name of the image to OCR and the second argument is the *basename* (ie the name minus the extension) of the *output* file. For tesseracts LSTM training to work the .box file basename *must* match the .tiff basename. This is also true for HyperKyube.
+**NOTE:** The name is repeated on purpose (it is **not** a typo). Tesseract's first argument is the name of the image to OCR and the second argument is the *basename* (ie the name minus the extension) of the *output* file. For tesseract's LSTM training to work the .box file basename *must* match the .tiff basename. This is also true for HyperKyube.
 
 # Getting Started: HyperKyube Instructions
 
