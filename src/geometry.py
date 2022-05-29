@@ -204,14 +204,9 @@ class NewWordBox(RenderedWordBox):
     @property
     def color(self): return 'blue'
 
-    def adjust(self,new_location: List[int,int]):
-        ''' Adjust the second corner of the box to the new location.'''
-        self.points[1] = new_location
-        self.update_displacements()
-
-    def update_displacements(self):
-        ''' Update the displacements based on the points. '''
-        x_values,y_values = tuple(zip(*self.points))
+    def _update_displacements(self):
+        ''' Update the displacements based on the corners. '''
+        x_values,y_values = tuple(zip(*self.corners))
         displacements = {
             'left': min(x_values),
             'right': max(x_values),
@@ -220,17 +215,24 @@ class NewWordBox(RenderedWordBox):
         }
         for edge in self.edges: edge.displacement = displacements[edge.name]
 
-    def create(self):
-        ''' Finalize creation of new wordbox and clear self. '''
-        if self.points[0] != self.points[1]:
-            wordbox = WordBox(self.wordbox.core)
-            the.boxes.as_list.append(wordbox)
-            the.new_wordbox = None
-            wordbox.launch_text_editor_dialog()
+    def adjust(self,new_location: List[int,int]):
+        ''' Adjust the second corner of the box to the new location.'''
+        self.corners[1] = new_location
+        self._update_displacements()
 
+    def _make_wordbox(self):
+        ''' Complete creation of the wordbox. '''
+        wordbox = WordBox(self.wordbox.core)
+        the.boxes.as_list.append(wordbox)
+        wordbox.launch_text_editor_dialog()
+
+    def create(self):
+        ''' If the box has two corners then finish creation. In the end self destruct. '''
+        if self.corners[0] != self.corners[1]: self._make_wordbox() 
+        the.new_wordbox = None
 
     def __init__(self, first_corner: List[int,int]):
-        self.points = [first_corner,first_corner]
+        self.corners = [first_corner,first_corner]
         self.wordbox = WordBox.Empty()
         self.wordbox.rendered = self
         super().__init__(self.wordbox)
