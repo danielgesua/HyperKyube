@@ -37,6 +37,7 @@ edge_names = [*horizontal_edge_names,*vertical_edge_names]
 
 class RenderedBox(ABC):
     ''' Interface for all boxes that can be displayed on the canvas. '''
+
     @property
     @abstractmethod
     def displacements(self) -> Displacements: pass
@@ -45,6 +46,14 @@ class RenderedBox(ABC):
     @abstractmethod
     def color(self) -> str: pass
 
+    def contains(self,point: List[int,int]) -> bool:
+        ''' Return wether the point is within the bounds of this box. '''
+        left = self.displacements.left
+        top = the.buffered_image.height - self.displacements.top
+        right = self.displacements.right
+        bottom = the.buffered_image.height - self.displacements.bottom
+        return (left <= point[0] <= right) and (top <= point[1] <= bottom)
+    
 class DragBox(RenderedBox):
     ''' 
     Object that represents a draggable box that's visible on the edges of the active wordbox,
@@ -77,14 +86,6 @@ class DragBox(RenderedBox):
     def adjust(self,new_location: List[int,int]) -> None: 
         ''' Adjust the position to a new location. '''
         self.center.position = new_location
-
-    def contains(self,point: List[int,int]) -> bool:
-        ''' Return wether the point is within the bounds of this box. '''
-        left = self.displacements.left
-        top = the.buffered_image.height - self.displacements.top
-        right = self.displacements.right
-        bottom = the.buffered_image.height - self.displacements.bottom
-        return (left <= point[0] <= right) and (top <= point[1] <= bottom)
 
     def __init__(self, center: EdgeCenter, size: int = 4) -> None:
         self.center = center
@@ -168,14 +169,6 @@ class RenderedWordBox(RenderedBox):
         x = sum([edge.displacement for edge in self.edges.horizontal])/2
         y = sum([edge.displacement for edge in self.edges.vertical])/2
         return float64([x,y])
-
-    def contains(self,point: List[int,int]):
-        ''' Return wether the point is within the bounds of this box. '''
-        left = self.edges.left.displacement
-        top = the.buffered_image.height - self.edges.top.displacement
-        right = self.edges.right.displacement
-        bottom = the.buffered_image.height - self.edges.bottom.displacement
-        return (left <= point[0] <= right) and (top <= point[1] <= bottom)
 
     def __init__(self,wordbox: WordBox):
         self.edges = Edges(wordbox)
