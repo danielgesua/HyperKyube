@@ -31,7 +31,7 @@ from tkinter.simpledialog import askstring
 from tkinter.filedialog import askopenfilename
 
 
-if TYPE_CHECKING: from geometry import WordBox
+if TYPE_CHECKING: from rendered_geometry import WordBox
 
 
 def display_invalid_value_error():

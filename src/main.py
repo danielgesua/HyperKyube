@@ -29,7 +29,7 @@ import tkinter
 
 from global_scope import real_global_scope as the
 from gui_builder import builder
-from geometry import DragBox, NewWordBox, WordBoxes
+from rendered_geometry import DragBox, NewWordBox, WordBoxes
 from parsing import parse
 from tooltips import WordBoxToolTip
 from about import AboutDialog

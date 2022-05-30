@@ -27,7 +27,7 @@ from __future__ import annotations
 
 from idlelib.tooltip import Hovertip
 from global_scope import real_global_scope as the
-from geometry import WordBox, NoActiveWordBox
+from rendered_geometry import WordBox, NoActiveWordBox
 
 
 class WordBoxToolTip(Hovertip):

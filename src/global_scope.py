@@ -52,7 +52,7 @@ For example:
 from typing import TYPE_CHECKING, Union
 from PIL import Image
 
-if TYPE_CHECKING: from geometry import NewWordBox, WordBox, WordBoxes, DragBox
+if TYPE_CHECKING: from rendered_geometry import NewWordBox, WordBox, WordBoxes, DragBox
 
 class NoActiveWordBox():
     ''' Dummy object to represent no wordbox is selected. '''

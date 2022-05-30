@@ -34,7 +34,7 @@ from functools import wraps
 from gui_builder import builder
 from global_scope import real_global_scope as the
 from parsing import parse
-from geometry import NewWordBox, RenderedBox, WordBoxes
+from rendered_geometry import NewWordBox, RenderedBox, WordBoxes
 
 PLACEHOLDER_IMAGE = 'assets/HyperKyube.tiff'
 PLACEHOLDER_BOXFILE = 'assets/HyperKyube.box'
