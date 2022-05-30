@@ -42,6 +42,7 @@ letter_splitter = re.compile(SPLITTING_PATTERN,flags=re.VERBOSE)
 
 @dataclass
 class Displacements():
+    ''' Data class containing the displacement values from the origin for each edge in a box. '''
     left: int
     top: int
     right: int
@@ -54,7 +55,7 @@ class Displacements():
 
 
 class WordBoxCore(SimpleNamespace):
-    ''' A box bounding a word. '''
+    ''' A simple namespace contianing the core attributes of a box bounding a word. '''
 
     @classmethod
     def Empty(cls: WordBoxCore):
@@ -71,6 +72,7 @@ class WordBoxCore(SimpleNamespace):
         return ''.join(rows)
 
     def __init__(self, row_match:re.Match = None,**kwargs) -> None:
+        ''' Create a core using either a regex match from file or explicitly passed parameters. '''
         kwargs = kwargs if row_match is None else row_match.groupdict()
         self.text: str = kwargs.pop('text') 
         self.displacements = Displacements(**kwargs)

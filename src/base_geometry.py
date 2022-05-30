@@ -67,6 +67,11 @@ class EdgeCenter():
 
     @position.setter
     def position(self, value: List[int,int]):
+        ''' 
+        Adjust the displacement of the edge from the point obtained from the drag and drop operation.
+        NOTE: To do this it must only consider the coordinate along the main displacement axis, and 
+        ignore the irrelevant coordinate. This is accomplished by performing via a dot product.
+        '''
         self.edge.displacement = dot(value,self.edge.axis)
 
     def __init__(self, edge: Edge) -> None:
