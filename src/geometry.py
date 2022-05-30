@@ -87,8 +87,9 @@ class DragBox(RenderedBox):
         ''' Adjust the position to a new location. '''
         self.center.position = new_location
 
-    def __init__(self, center: EdgeCenter, size: int = 4) -> None:
-        self.center = center
+    def __init__(self, edge: Edge, size: int = 4) -> None:
+        ''' Create the dragbox from the edge's center and add self to the edge. '''
+        self.center = edge.center
         self.size = size
 
 class EdgeCenter():
@@ -130,7 +131,7 @@ class Edge():
         self.perpendicular_axis = float64([1,1]) - self.axis
         self.wordbox = wordbox
         self.center = EdgeCenter(self)
-        self.dragbox = DragBox(self.center)
+        self.dragbox: DragBox = None
         self.name = name
 
     def __repr__(self) -> str: return f'{self.displacement}'
@@ -185,6 +186,10 @@ class WordBox():
         ''' Return the dragboxes '''
         return (edge.dragbox for edge in self.rendered.edges)
 
+    def create_dragboxes(self):
+        ''' Create the dragbox for each edge and register it. '''
+        for edge in self.rendered.edges: edge.dragbox = DragBox(edge)
+
     def launch_text_editor_dialog(self):
         ''' 
         Output a persistent dialogue to let user change the text of this wordbox. 
@@ -197,6 +202,7 @@ class WordBox():
     def __init__(self, core: WordBoxCore):
         self.core = core
         self.rendered = RenderedWordBox(wordbox=self)
+        self.create_dragboxes()
 
 class NewWordBox(RenderedWordBox):
     ''' Transient helper class for wordbox creation using rectangular drag selection. '''
