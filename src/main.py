@@ -33,8 +33,9 @@ from rendered_geometry import DragBox, NewWordBox, WordBoxes
 from parsing import parse
 from tooltips import WordBoxToolTip
 from about import AboutDialog
-from dialogs import prompt_for_boxfile_to_open
+from dialogs import prompt_for_boxfile_to_open, prompt_for_image_to_process
 from main_canvas import CanvasManager, with_refresh
+from tesseract_automation import make_lstmbox_file
 
 
 PROJECT_PATH = pathlib.Path(__file__).parent
@@ -63,14 +64,27 @@ class GuiApp:
         self.mainwindow.mainloop()
 
     @with_refresh
-    def load_boxfile(self, event: tkinter.Event = None):
-        ''' Open a box-file/image combination on the main canvas.'''
-        if (file_name := prompt_for_boxfile_to_open()): 
-            file_path = pathlib.Path(file_name)
-            the.active_file_path = str(file_path)
-            img_file_path = str(file_path.with_suffix('.tiff'))
-            self.canvas_manager.load_original_image(img_file_path)
-            the.boxes = WordBoxes(parse(file_name))
+    def load_boxfile(self, file_name: str):
+        ''' Load a box-file/image combination on the main canvas.'''
+        file_path = pathlib.Path(file_name)
+        the.active_file_path = str(file_path.with_suffix('.box'))
+        img_file_path = str(file_path.with_suffix('.tiff'))
+        self.canvas_manager.load_original_image(img_file_path)
+        the.boxes = WordBoxes(parse(the.active_file_path))
+
+    def obtain_and_load_boxfile(self, event: tkinter.Event = None):
+        ''' Load the boxfile provided by the user.'''
+        if (file_name := prompt_for_boxfile_to_open()): self.load_boxfile(file_name)
+
+    def make_boxfile_from_image(self, event: tkinter.Event = None):
+        '''
+        Request an image from the user. If the user selects one then run Tesseract on it
+        to make a boxfile and load it.
+        '''
+        if (file_name := prompt_for_image_to_process()): 
+            make_lstmbox_file(file_name)
+            self.load_boxfile(file_name)
+            
 
     def save_boxfile(self, event: tkinter.Event = None):
         ''' Save the corrected wordbox data to the active file. '''

@@ -60,3 +60,12 @@ def prompt_for_boxfile_to_open() -> str:
     title = 'Select Box-File to open.'
     valid_filetypes = [('Tesseract Box Files','*.box')]
     return askopenfilename(title=title,filetypes=valid_filetypes)
+
+def prompt_for_image_to_process() -> str:
+    '''
+    Open Image File Dialog:
+    Request an image file from the user to process and return its path.
+    '''
+    title = 'Select Image File to process.'
+    valid_filetypes = [('TIFF Image Files', '*.tiff')]
+    return askopenfilename(title=title,filetypes=valid_filetypes)

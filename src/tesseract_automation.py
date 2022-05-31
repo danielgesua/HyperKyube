@@ -27,4 +27,4 @@ def make_lstmbox_file(file_path: str):
     ''' Run tesseract's LSTM box routine on the desired tiff image. '''
     path = Path(file_path)
     output_basename = path.with_suffix('')
-    run_tesseract(str(path),str(output_basename),'.box','eng','lstmbox')
+    run_tesseract(str(path),str(output_basename),'box','eng','lstmbox')

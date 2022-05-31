@@ -6,7 +6,7 @@
     <property name="title" translatable="yes">HyperKyube: OCR MultiTool</property>
     <bind sequence="&lt;Control-F4&gt;" handler="exit" add="" />
     <bind sequence="&lt;Control-c&gt;" handler="copy_text" add="" />
-    <bind sequence="&lt;Control-o&gt;" handler="load_boxfile" add="" />
+    <bind sequence="&lt;Control-o&gt;" handler="obtain_and_load_boxfile" add="" />
     <bind sequence="&lt;Control-s&gt;" handler="save_boxfile" add="" />
     <bind sequence="&lt;Delete&gt;" handler="delete_wordbox" add="" />
     <child>
@@ -22,9 +22,17 @@
                 <property name="underline">0</property>
                 <child>
                   <object class="tk.Menuitem.Command" id="load_command">
-                    <property name="command" type="command" cbtype="simple">load_boxfile</property>
+                    <property name="command" type="command" cbtype="simple">obtain_and_load_boxfile</property>
                     <property name="font">{DejaVu Sans Mono} 10 {}</property>
-                    <property name="label" translatable="yes">Open...        Ctrl + O</property>
+                    <property name="label" translatable="yes">Open Boxfile...              Ctrl + O</property>
+                    <property name="underline">0</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="tk.Menuitem.Command" id="make_from_image_command">
+                    <property name="command" type="command" cbtype="simple">make_boxfile_from_image</property>
+                    <property name="font">{DejaVu Sans Mono} 10 {}</property>
+                    <property name="label" translatable="yes">Make Boxfile From Image...</property>
                     <property name="underline">0</property>
                   </object>
                 </child>
@@ -32,7 +40,7 @@
                   <object class="tk.Menuitem.Command" id="save_command">
                     <property name="command" type="command" cbtype="simple">save_boxfile</property>
                     <property name="font">{DejaVu Sans Mono} 10 {}</property>
-                    <property name="label" translatable="yes">Save...        Ctrl + S</property>
+                    <property name="label" translatable="yes">Save...                      Ctrl + S</property>
                     <property name="underline">0</property>
                   </object>
                 </child>
@@ -53,7 +61,7 @@
                   <object class="tk.Menuitem.Command" id="exit_command">
                     <property name="command" type="command" cbtype="simple">exit</property>
                     <property name="font">{DejaVu Sans Mono} 10 {}</property>
-                    <property name="label" translatable="yes">Exit           Ctrl + F4</property>
+                    <property name="label" translatable="yes">Exit                        Ctrl + F4</property>
                     <property name="underline">0</property>
                   </object>
                 </child>
@@ -124,7 +132,6 @@
           <property name="propagate">True</property>
           <property name="row">1</property>
           <property name="sticky">nsew</property>
-          <property type="col" id="0" name="weight">1</property>
           <property type="row" id="1" name="weight">1</property>
         </layout>
         <child>
