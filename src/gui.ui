@@ -132,6 +132,7 @@
           <property name="propagate">True</property>
           <property name="row">1</property>
           <property name="sticky">nsew</property>
+          <property type="col" id="0" name="weight">1</property>
           <property type="row" id="1" name="weight">1</property>
         </layout>
         <child>
