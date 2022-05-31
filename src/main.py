@@ -139,7 +139,7 @@ class GuiApp:
         ''' 
         Delete the current active wordbox. Triggered by pressing delete. 
         '''
-        the.boxes.delete(the.active_wordbox)
+        if the.active_wordbox: the.boxes.delete(the.active_wordbox)
 
     @with_refresh
     def edit_text(self,event: tkinter.Event):
