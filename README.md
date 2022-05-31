@@ -17,11 +17,13 @@ It's primary purpose is currently to edit lstmbox box files for training the LST
 
 # Dependencies
 
-HyperKyube has a few dependencies. The Gui runs based on python's native tkinter library, and the image manipulations use Python Imaging Library (aka [Pillow](https://github.com/python-pillow/Pillow)).
+HyperKyube has quite a few dependencies. Here's a summary of some of them...
+
+The Gui runs based on python's native tkinter library, and the image manipulations use Python Imaging Library (aka [Pillow](https://github.com/python-pillow/Pillow)).
 
 Apart from that, the development was greatly facilitated by a killer GUI builder called [Pygubu](https://github.com/alejandroautalan/pygubu), and the file parser makes light usage of [Pydantic](https://github.com/samuelcolvin/pydantic) dataclasses for typecasting.
 
-Finally the rendered geometry uses [Numpy](https://pypi.org/project/numpy/) for a few simple vector operations.
+The rendered geometry uses [Numpy](https://pypi.org/project/numpy/) for a few simple vector operations, and automation of the Tesseract API is done by [PyTesseract](https://pypi.org/project/pytesseract/).
 
 Installation of the dependencies is easy and explained in the installation section below. 
 
@@ -51,28 +53,6 @@ pip install -r requirements.txt
 pip install --upgrade pip
 ```
 
-# Getting Started: Making an LSTM Box File Using Tesseract v. 5.1.0.
-
-To begin using the application you will need a box file to edit.
-
-To make the LSTM box file you will need to install the CLI for [Tesseract version 5.1.0](https://github.com/tesseract-ocr/tesseract). 
-
-To test wether tesseract is properly installed simply open up the platform shell and type:
-
-```bash
-tesseract --version
-```
-
-The version information should be printed.
-
-With tesseract installed, simply navigate to the folder where your .tiff is stored and replace the word "image_name" with the actual name of your image in the command below:
-
-```bash
-tesseract image_name.tiff image_name lstmbox
-```
-
-**NOTE:** The name is repeated on purpose (it is **not** a typo). Tesseract's first argument is the name of the image to OCR and the second argument is the *basename* (ie the name minus the extension) of the *output* file. For tesseract's LSTM training to work the .box file basename *must* match the .tiff basename. This is also true for HyperKyube.
-
 # Getting Started: HyperKyube Instructions
 
 ## Opening the HyperKyube Gui.
@@ -94,14 +74,21 @@ Once it has been installed as described in the installation instructions the app
 
     **NOTE:** While we have no reason to expect any incompatibilities, HyperKyube has not yet been tested for MacOS or other Apple OS's. Please let us know if you experience any issues.
 
-This should open the gui window. Remember: To get started editing box files you'll need a test image in .tiff format, and an LSTM box file created as described above.
+This should open the gui window. 
 
-## Editing the LSTM Box files.
+Remember: To get started editing box files you'll need a test image in .tiff format and you'll need an lstmbox file. This can be created using tesseract on the CLI or you can create one using our GUI as described below.
 
+## Editing the LSTM Boxfiles.
 HyperKyube is very simple and intuitive, but here's the controls in a nutshell.
 
+### Creating LSTM Boxfiles from Unprocessed TIFF Images:
+HyperKyube can use PyTesseract to make a box file directly from a TIFF image. Just go to the main menu
+bar and click file->"Make Boxfile From Image..." then select a TIFF image.
+
+It should then automaticaly open the box file to allow for editing.
+
 ### Opening Files:
-To open the box file for editing simply file->open from the main menu or press Ctrl + O, then select the file. 
+To open a pre-existing box file for editing simply file->open from the main menu or press Ctrl + O, then select the file. 
 
 The image should appear with boxes arround each item of identified text. 
 
