@@ -30,14 +30,16 @@ import tkinter
 from typing import Any, Callable, TYPE_CHECKING
 from PIL import ImageTk,Image, ImageDraw,ImageOps
 from functools import wraps
+from pathlib import Path
 
 from gui_builder import builder
 from global_scope import real_global_scope as the
 from parsing import parse
 from rendered_geometry import NewWordBox, RenderedBox, WordBoxes
 
-PLACEHOLDER_IMAGE = 'assets/HyperKyube.tiff'
-PLACEHOLDER_BOXFILE = 'assets/HyperKyube.box'
+__placeholder_image_path = Path(__file__).parents[1] / 'assets' / 'HyperKyube'
+PLACEHOLDER_IMAGE = str(__placeholder_image_path.with_suffix('.tiff'))
+PLACEHOLDER_BOXFILE = str(__placeholder_image_path.with_suffix('.box'))
 
 if TYPE_CHECKING: from main import GuiApp
 
