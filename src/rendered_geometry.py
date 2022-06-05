@@ -22,6 +22,8 @@ This module contains all objects related to geometric entities rendered on the m
 
 
 from __future__ import annotations
+from PIL import Image,ImageFont
+from PIL.ImageDraw import ImageDraw
 
 from typing import List, Tuple
 from numpy import float64, dot
@@ -31,7 +33,10 @@ from global_scope import NoActiveWordBox, real_global_scope as the
 from dialogs import prompt_for_wordbox_text, display_invalid_value_error
 from base_geometry import Edges, Edge, RenderedBox
 
-    
+FONT = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf',100)
+_TRANSPARENT_COLOR = (255,255,255,0,)
+_BLACK_OPAQUE = (0,0,0,255,)
+
 class DragBox(RenderedBox):
     ''' 
     Object that represents a draggable box that's visible on the edges of the active wordbox,
@@ -95,8 +100,19 @@ class RenderedWordBox(RenderedBox):
         y = sum([edge.displacement for edge in self.edges.vertical])/2
         return float64([x,y])
 
+    @property
+    def on_mirror_canvas(self) -> Image.Image:
+        ''' Return an image of the wordbox containing the OCR'd text to scale. '''
+        text = self.wordbox.core.text
+        initial_size = FONT.getsize(text)
+        word_canvas = Image.new('RGBA',initial_size,_TRANSPARENT_COLOR)
+        position = (initial_size[0]//2,initial_size[1]//2,)
+        ImageDraw(word_canvas).text(position,text,fill=_BLACK_OPAQUE,font=FONT,anchor='mm')
+        return word_canvas.resize(self.size).transpose(Image.FLIP_TOP_BOTTOM)
+
     def __init__(self,wordbox: WordBox):
         self.edges = Edges(wordbox)
+        self.wordbox = wordbox
 
 
 class WordBox():

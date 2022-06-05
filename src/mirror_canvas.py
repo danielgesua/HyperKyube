@@ -26,13 +26,13 @@ from __future__ import annotations
 import tkinter
 from typing import Any, Callable
 from functools import wraps
-from PIL import Image, ImageOps, ImageTk,ImageFont
-from PIL.ImageDraw import ImageDraw, Draw
+from PIL import Image, ImageOps, ImageTk
+from PIL.ImageDraw import  Draw
 
 from global_scope import real_global_scope as the
 from gui_builder import builder
 from rendered_geometry import WordBox, RenderedBox
-from main_canvas import CanvasManager
+
 
 def do_in_box_file_coordinates(method: Callable):
     ''' 
@@ -48,9 +48,6 @@ def do_in_box_file_coordinates(method: Callable):
 
     return wrapper
 
-FONT = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf',100)
-_TRANSPARENT_COLOR = (255,255,255,0,)
-_BLACK_OPAQUE = (0,0,0,255,)
 
 class MirrorCanvas():
     ''' Object that mirrors the main canvas by displaying all the OCR'd text to scale. '''
@@ -66,11 +63,7 @@ class MirrorCanvas():
 
     def draw_word(self,box: WordBox):
         ''' Draw a wordbox on the mirror image. '''
-        initial_size = FONT.getsize(box.core.text)
-        word_canvas = Image.new('RGBA',initial_size,_TRANSPARENT_COLOR)
-        position = (initial_size[0]//2,initial_size[1]//2,)
-        ImageDraw(word_canvas).text(position,box.core.text,fill=_BLACK_OPAQUE,font=FONT,anchor='mm')
-        word = word_canvas.resize(box.rendered.size).transpose(Image.FLIP_TOP_BOTTOM)
+        word = box.rendered.on_mirror_canvas
         x = box.rendered.displacements.left
         y = box.rendered.displacements.top - word.size[1]
         the.mirror_image.paste(word,(x,y,),word)
