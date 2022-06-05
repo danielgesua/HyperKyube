@@ -35,6 +35,7 @@ from tooltips import WordBoxToolTip
 from about import AboutDialog
 from dialogs import prompt_for_boxfile_to_open, prompt_for_image_to_process
 from main_canvas import CanvasManager, with_refresh
+from mirror_canvas import MirrorCanvas
 from tesseract_automation import make_lstmbox_file
 
 
@@ -56,6 +57,7 @@ class GuiApp:
         builder.add_from_file(PROJECT_UI)
         self.mainwindow: tkinter.Toplevel = builder.get_object('outer_window', master)
         self.canvas_manager = CanvasManager()
+        self.mirror_canvas = MirrorCanvas()
         self.about_dialogue = AboutDialog()
         self.tooltip = WordBoxToolTip(self.canvas_manager.canvas,'',0)
         builder.connect_callbacks(self)

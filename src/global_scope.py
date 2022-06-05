@@ -67,6 +67,7 @@ class RealGlobalScope():
     def __init__(self) -> None:
         self.scale: float = 1.0
         self.buffered_image: Image.Image = None
+        self.mirror_image: Image.Image = None
         self.boxes: WordBoxes = None
         self.active_wordbox: Union[WordBox,NoActiveWordBox] = NoActiveWordBox()
         self.new_wordbox: NewWordBox = None

@@ -73,6 +73,7 @@ def with_refresh(method: Callable):
     def wrapper(self: GuiApp,*args,**kwargs):
         method(self,*args,**kwargs)
         self.canvas_manager.display_image()
+        self.mirror_canvas.display_image()
         self.tooltip.hidetip()
 
     return wrapper

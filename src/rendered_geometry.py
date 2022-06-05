@@ -23,7 +23,7 @@ This module contains all objects related to geometric entities rendered on the m
 
 from __future__ import annotations
 
-from typing import List
+from typing import List, Tuple
 from numpy import float64, dot
 
 from parsing import Displacements, WordBoxCore
@@ -80,6 +80,13 @@ class RenderedWordBox(RenderedBox):
     def displacements(self):
         ''' Return the displacements of the edges in the rendered wordbox as a Displacements object. '''
         return Displacements(**{edge.name:edge.displacement for edge in self.edges})
+
+    @property
+    def size(self) -> Tuple[int,int]:
+        ''' Return the size of the box as a tuple. '''
+        width = self.displacements.right - self.displacements.left
+        height = self.displacements.top - self.displacements.bottom
+        return (width,height,)
 
     @property
     def center(self) -> float64:
