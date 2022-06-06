@@ -137,7 +137,7 @@
         </layout>
         <child>
           <object class="tk.Canvas" id="image_display">
-            <property name="background">#000000</property>
+            <property name="background">#d9d9d9</property>
             <property name="height">800</property>
             <property name="relief">sunken</property>
             <bind sequence="&lt;1&gt;" handler="activate_selection" add="" />
@@ -173,7 +173,7 @@
         </layout>
         <child>
           <object class="tk.Canvas" id="mirror_canvas">
-            <property name="background">#000000</property>
+            <property name="background">#d9d9d9</property>
             <property name="height">800</property>
             <property name="relief">sunken</property>
             <bind sequence="&lt;1&gt;" handler="activate_selection" add="" />
