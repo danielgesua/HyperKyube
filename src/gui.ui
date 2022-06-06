@@ -126,7 +126,6 @@
     </child>
     <child>
       <object class="tk.Frame" id="outer_frame">
-        <property name="height">800</property>
         <layout manager="grid">
           <property name="column">0</property>
           <property name="propagate">True</property>
@@ -138,7 +137,6 @@
         <child>
           <object class="tk.Canvas" id="image_display">
             <property name="background">#d9d9d9</property>
-            <property name="height">800</property>
             <property name="relief">sunken</property>
             <bind sequence="&lt;1&gt;" handler="activate_selection" add="" />
             <bind sequence="&lt;B1-Motion&gt;" handler="drag_selection" add="" />
@@ -162,7 +160,6 @@
     </child>
     <child>
       <object class="tk.Frame" id="mirror_frame">
-        <property name="height">800</property>
         <layout manager="grid">
           <property name="column">1</property>
           <property name="propagate">True</property>
@@ -174,7 +171,6 @@
         <child>
           <object class="tk.Canvas" id="mirror_canvas">
             <property name="background">#d9d9d9</property>
-            <property name="height">800</property>
             <property name="relief">sunken</property>
             <bind sequence="&lt;1&gt;" handler="activate_selection" add="" />
             <bind sequence="&lt;B1-Motion&gt;" handler="drag_selection" add="" />

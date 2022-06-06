@@ -74,6 +74,12 @@ def with_refresh(method: Callable):
         method(self,*args,**kwargs)
         self.canvas_manager.display_image()
         self.mirror_canvas.display_image()
+        padx = self.canvas_manager.canvas.grid_info()['padx']
+        width = 2*(the.buffered_image.width+2*padx)
+        min_height = 100
+        max_height = self.mainwindow.winfo_screenheight()
+        self.mainwindow.minsize(width,min_height)
+        self.mainwindow.maxsize(width+2,max_height)
         self.tooltip.hidetip()
 
     return wrapper
