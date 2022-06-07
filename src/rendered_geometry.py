@@ -32,8 +32,8 @@ from parsing import Displacements, WordBoxCore
 from global_scope import NoActiveWordBox, real_global_scope as the
 from dialogs import prompt_for_wordbox_text, display_invalid_value_error
 from base_geometry import Edges, Edge, RenderedBox
+from os_specific import FONT
 
-FONT = ImageFont.truetype('Pillow/Tests/fonts/FreeMono.ttf',100)
 _TRANSPARENT_COLOR = (255,255,255,0,)
 _BLACK_OPAQUE = (0,0,0,255,)
 
