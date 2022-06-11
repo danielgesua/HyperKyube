@@ -28,6 +28,7 @@ from __future__ import annotations
 from idlelib.tooltip import Hovertip
 from global_scope import real_global_scope as the
 from rendered_geometry import WordBox, NoActiveWordBox
+from tkinter import Toplevel, TclError
 
 
 class WordBoxToolTip(Hovertip):
@@ -67,4 +68,29 @@ class WordBoxToolTip(Hovertip):
             self.text = ''
         else:
             self.calculate_position(wordbox)
-            self.message = wordbox.core.text            
+            self.message = wordbox.core.text
+
+    def showtip(self):
+        ''' 
+        display the tooltip.
+        NOTE: This method overloads the original HoverTip method to fix an error that was raised when
+        shrinking the window then quickly moving the mouse up to a wordbox. The only functional
+        difference is that the code check for the existance of a tip window before lifting it.
+        '''
+        if self.tipwindow: return
+        self.tipwindow = tw = Toplevel(self.anchor_widget)
+        # show no border on the top level window
+        tw.wm_overrideredirect(1)
+        try:
+            # This command is only needed and available on Tk >= 8.4.0 for OSX.
+            # Without it, call tips intrude on the typing process by grabbing
+            # the focus.
+            tw.tk.call("::tk::unsupported::MacWindowStyle", "style", tw._w,
+                       "help", "noActivates")
+        except TclError:
+            pass
+
+        self.position_window()
+        self.showcontents()
+        self.tipwindow.update_idletasks()  # Needed on MacOS -- see #34275.
+        if self.tipwindow: self.tipwindow.lift()  # work around bug in Tk 8.5.18+ (issue #24570)            
