@@ -59,7 +59,7 @@ class AboutDialog():
         HyperKyube is a free and open-source GUI tool designed to automate and simplify
         various tasks related to Google's Tesseract-OCR API. Its primary purpose is 
         editing lstmbox box files for training the LSTM engine, however it can also copy
-        text from the images, and automate creation of box files (coming soon!!!).
+        text from the images, and automate creation of box files.
 
         Traditionally many of the tasks involved with training of the Tesseract LSTM 
         engine have required cryptic usage of console commands and are made difficult
