@@ -56,6 +56,7 @@ class GuiApp:
         builder.add_resource_path(PROJECT_PATH)
         builder.add_from_file(PROJECT_UI)
         self.mainwindow: tkinter.Toplevel = builder.get_object('outer_window', master)
+        self.mainwindow.geometry(f'474x600')
         self.canvas_manager = CanvasManager()
         self.mirror_canvas = MirrorCanvas()
         self.about_dialogue = AboutDialog()
