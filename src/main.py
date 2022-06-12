@@ -69,9 +69,17 @@ class GuiApp:
     @with_refresh
     def load_boxfile(self, file_name: str):
         ''' Load a box-file/image combination on the main canvas.'''
+
+        def find_corresponding_image(file_path: pathlib.Path):
+            ''' Find the first image that corresponds to this box file and return its path.'''
+            directory = file_path.parent
+            glob_pattern = f'{file_path.stem}.tif*'
+            match = map(str,directory.glob(glob_pattern))
+            return next(match)   
+
         file_path = pathlib.Path(file_name)
         the.active_file_path = str(file_path.with_suffix('.box'))
-        img_file_path = str(file_path.with_suffix('.tiff'))
+        img_file_path = find_corresponding_image(file_path)
         self.canvas_manager.load_original_image(img_file_path)
         the.boxes = WordBoxes(parse(the.active_file_path))
 

@@ -67,5 +67,5 @@ def prompt_for_image_to_process() -> str:
     Request an image file from the user to process and return its path.
     '''
     title = 'Select Image File to process.'
-    valid_filetypes = [('TIFF Image Files', '*.tiff')]
+    valid_filetypes = [('TIFF Image Files', '*.tif*')]
     return askopenfilename(title=title,filetypes=valid_filetypes)
