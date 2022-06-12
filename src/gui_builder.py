@@ -20,8 +20,11 @@
 This module serves as a central location to import the pygubu builder into all subsequent classes that require it.
 '''
 
+import logging
 import tkinter as tk
 import tkinter.ttk as ttk
 import pygubu
 
 builder = pygubu.Builder()
+__builder_logger = logging.getLogger('pygubu.builder')
+__builder_logger.setLevel(logging.ERROR)
